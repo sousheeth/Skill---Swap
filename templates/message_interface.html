@@ -1,0 +1,134 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container mt-5">
+    <div class="row">
+        <!-- User List -->
+        <div class="col-md-4">
+            <h5 class="mb-3">📇 Users</h5>
+            <ul class="list-group" id="user-list">
+                {% for user in users %}
+                <li class="list-group-item user-item d-flex justify-content-between align-items-center"
+                    data-user-id="{{ user.user.id }}" data-username="{{ user.user.username }}">
+                    <strong>{{ user.user.username }}</strong>
+                    <span class="badge bg-danger unread-count" style="display:none;">0</span>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+
+
+        <!-- Chat Area -->
+        <div class="col-md-8">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white">💬 Chat Window</div>
+                <div class="card-body" id="chat-box" style="height: 400px; overflow-y: auto;">
+                    {% for message in messages %}
+                    <div class="mb-2 {% if message.sender == request.user %}text-end{% else %}text-start{% endif %}">
+                        <strong>{{ message.sender.username }}:</strong> {{ message.content }}
+                    </div>
+                    {% endfor %}
+                </div>
+                <div class="card-footer">
+                    <form id="message-form">
+                        {% csrf_token %}
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="message-input"
+                                placeholder="Type your message...">
+                            <button class="btn btn-success" type="submit">Send</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    let selectedUserId = null;
+
+    document.querySelectorAll('.user-item').forEach(item => {
+        item.addEventListener('click', function () {
+            // Remove active class from all users
+            document.querySelectorAll('.user-item').forEach(el => el.classList.remove('active'));
+
+            // Add active class to the clicked user
+            this.classList.add('active');
+
+            // Update selectedUserId
+            selectedUserId = this.getAttribute('data-user-id');
+
+            const username = this.getAttribute('data-username');
+
+            // Mark messages from this user as read
+            fetch('/mark_messages_as_read/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': '{{ csrf_token }}'
+                },
+                body: JSON.stringify({ sender_username: username })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'success') {
+                        // Hide unread count for this user
+                        this.querySelector('.unread-count').style.display = 'none';
+                        updateGlobalMessageCount();
+                    } else {
+                        console.error('Failed to mark messages as read');
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+        });
+    });
+
+    // Handle message submission
+    document.getElementById('message-form').addEventListener('submit', async function (e) {
+        e.preventDefault();
+
+        const messageInput = document.getElementById('message-input');
+        const content = messageInput.value.trim();
+
+        if (!selectedUserId) {
+            alert("Please select a user to send the message!");
+            return;
+        }
+
+        if (!content) {
+            alert("Message cannot be empty!");
+            return;
+        }
+
+        try {
+            const response = await fetch('/send_message/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': '{{ csrf_token }}'
+                },
+                body: JSON.stringify({ receiver_id: selectedUserId, content: content })
+            });
+
+            const result = await response.json();
+            if (result.status === 'success') {
+                const chatBox = document.getElementById('chat-box');
+                const newMessage = document.createElement('div');
+                newMessage.className = 'text-end mb-2';
+                newMessage.innerHTML = `<strong>You:</strong> ${content}`;
+                chatBox.appendChild(newMessage);
+                chatBox.scrollTop = chatBox.scrollHeight;
+
+                messageInput.value = '';
+            } else {
+                alert(`Failed to send message: ${result.message}`);
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alert("An error occurred while sending the message.");
+        }
+    });
+</script>
+
+{% endblock %}

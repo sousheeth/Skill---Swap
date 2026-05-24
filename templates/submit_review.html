@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="card shadow-lg">
+        <div class="card-header bg-primary text-white text-center">
+            <h4>🌟 Leave a Review</h4>
+        </div>
+        <div class="card-body">
+            <form method="POST" action="{% url 'submit_review' request_id=request_id %}">
+                {% csrf_token %}
+
+                <!-- Rating Input -->
+                <div class="mb-3">
+                    <label for="rating" class="form-label">⭐ Rating (1 to 5)</label>
+                    <input type="number" name="rating" min="1" max="5" class="form-control" required>
+                </div>
+
+                <!-- Comment Input -->
+                <div class="mb-3">
+                    <label for="comment" class="form-label">💬 Comment</label>
+                    <textarea name="comment" class="form-control" rows="4" required></textarea>
+                </div>
+
+                <!-- Submit Button -->
+                <div class="text-center">
+                    <button type="submit" class="btn btn-success">✅ Submit Review</button>
+                    <a href="{% url 'view_requests' %}" class="btn btn-secondary">🔙 Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

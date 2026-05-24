@@ -1,0 +1,107 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+    .card {
+    border-radius: 20px;
+    transition: transform 0.3s;
+}
+
+.card:hover {
+    transform: scale(1.05);
+}
+
+.card-title {
+    font-family: 'Raleway', sans-serif;
+    font-weight: 600;
+    color: #1e4356;
+}
+
+.card-text {
+    color: #333333;
+}
+
+.input-group input {
+    border-radius: 30px 0 0 30px;
+}
+
+.input-group .btn {
+    border-radius: 0 30px 30px 0;
+}
+</style>
+<div class="container mt-5">
+    {% if messages %}
+    <div class="container mt-3">
+        {% for message in messages %}
+        <div class="alert alert-{% if message.tags == 'error' %}danger{% else %}{{ message.tags }}{% endif %} alert-dismissible fade show"
+            role="alert">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <!-- Search Form -->
+    <div class="card shadow">
+        <div class="card-header bg-info text-white text-center">
+            <h4 class="mb-0">🔍 Search Users by Skills</h4>
+        </div>
+        <div class="card-body">
+            <form method="GET" action="{% url 'search_users' %}" class="input-group mb-3">
+                <input type="text" class="form-control form-control-lg" name="search"
+                    placeholder="Enter skills (e.g., Python, Cooking)" value="{{ query }}" required>
+                <button class="btn btn-primary" type="submit">Search</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Search Results -->
+    <div class="row mt-4">
+        {% if matched_profiles %}
+        {% for profile in matched_profiles %}
+        <div class="col-lg-4 mb-4">
+            <div class="card border-info shadow">
+                <div class="bg-image hover-zoom text-center mt-3">
+                    <img src="{{ profile.profile_picture.url }}" class="rounded-circle" alt="Profile Picture"
+                        width="120" height="120">
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title text-center">{{ profile.user.username }}</h5>
+                    <p class="card-text"><strong>Skills:</strong> {{ profile.skills }}</p>
+                    <p class="card-text"><strong>Interests:</strong> {{ profile.interests }}</p>
+                    <p class="card-text"><strong>Bio:</strong> {{ profile.bio|truncatechars:100 }}</p>
+
+                    <!-- Conditional rendering for self -->
+                    {% if profile.user != request.user %}
+                    <!-- Send Request Form -->
+                    <form method="POST" action="{% url 'send_request' profile.user.id %}" class="mt-3">
+                        {% csrf_token %}
+                        <div class="form-outline mb-3">
+                            <textarea class="form-control" name="message" rows="2"
+                                placeholder="Add a message"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-success btn-rounded w-100">
+                            <i class="fas fa-exchange-alt me-2"></i>Send Skill Exchange Request
+                        </button>
+                    </form>
+                    {% else %}
+                    <!-- Disabled button if it's the user's own profile -->
+                    <button class="btn btn-secondary w-100" disabled>
+                        <i class="fas fa-ban me-2"></i>Can't Request Yourself
+                    </button>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+        {% else %}
+        <div class="col-12">
+            <div class="alert alert-warning text-center" role="alert">
+                😔 No users found with the specified skills.
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

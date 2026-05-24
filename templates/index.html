@@ -1,0 +1,203 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Upload Video{% endblock %}
+
+{% block content %}
+
+    
+
+        <!-- Hero Section -->
+        <section id="hero" class="hero section dark-background">
+
+            <img src="{% static 'img/hero-bg.jpg" alt="" data-aos="fade-in">
+
+<div id="hero-carousel" class="carousel carousel-fade" data-bs-ride="carousel" data-bs-interval="5000">
+
+    <div class="container position-relative">
+
+        <div class="carousel-item active">
+            <div class="carousel-container">
+                <h2>Welcome to Skill Swap Platform</h2>
+                <p>Join a vibrant community where learning and sharing skills happen seamlessly. Connect with
+                    like-minded individuals, exchange knowledge, and grow together—all without the need for money.</p>
+                <a href="#about" class="btn-get-started">Learn More</a>
+            </div>
+        </div><!-- End Carousel Item -->
+
+        <div class="carousel-item">
+            <div class="carousel-container">
+                <h2>Exchange Skills, Expand Possibilities</h2>
+                <p>Whether you want to learn a new language, refine your photography, or master cooking, Skill Swap
+                    Platform enables you to teach what you know and learn what you love in an interactive environment.
+                </p>
+                <a href="#about" class="btn-get-started">Get Started</a>
+            </div>
+        </div><!-- End Carousel Item -->
+
+        <div class="carousel-item">
+            <div class="carousel-container">
+                <h2>Foster Collaboration and Growth</h2>
+                <p>Empower yourself and your community by participating in a knowledge-sharing culture. Network, build
+                    meaningful relationships, and develop skills that open new opportunities.</p>
+                <a href="#about" class="btn-get-started">Join Now</a>
+            </div>
+        </div><!-- End Carousel Item -->
+
+        <a class="carousel-control-prev" href="#hero-carousel" role="button" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon bi bi-chevron-left" aria-hidden="true"></span>
+        </a>
+
+        <a class="carousel-control-next" href="#hero-carousel" role="button" data-bs-slide="next">
+            <span class="carousel-control-next-icon bi bi-chevron-right" aria-hidden="true"></span>
+        </a>
+
+        <ol class="carousel-indicators"></ol>
+
+    </div>
+</div>
+            </div>
+
+        </section><!-- /Hero Section -->
+
+        <!-- Featured Services Section -->
+        <section id="featured-services" class="featured-services section">
+
+            <div class="container">
+
+<div class="row gy-4">
+
+    <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="100">
+        <div class="service-item item-cyan position-relative">
+            <div class="icon">
+                <i class="bi bi-people"></i>
+            </div>
+            <a href="service-details.html" class="stretched-link">
+                <h3>Skill Exchange</h3>
+            </a>
+            <p>Connect with individuals to trade knowledge and expertise in a dynamic learning environment.</p>
+        </div>
+    </div><!-- End Service Item -->
+
+    <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="200">
+        <div class="service-item item-orange position-relative">
+            <div class="icon">
+                <i class="bi bi-lightbulb"></i>
+            </div>
+            <a href="service-details.html" class="stretched-link">
+                <h3>Innovative Learning</h3>
+            </a>
+            <p>Explore a variety of skills and subjects through peer-to-peer collaboration and engagement.</p>
+        </div>
+    </div><!-- End Service Item -->
+
+    <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="300">
+        <div class="service-item item-teal position-relative">
+            <div class="icon">
+                <i class="bi bi-chat"></i>
+            </div>
+            <a href="service-details.html" class="stretched-link">
+                <h3>Community Collaboration</h3>
+            </a>
+            <p>Engage in meaningful exchanges and build relationships with people sharing similar interests.</p>
+        </div>
+    </div><!-- End Service Item -->
+
+    <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="400">
+        <div class="service-item item-red position-relative">
+            <div class="icon">
+                <i class="bi bi-globe"></i>
+            </div>
+            <a href="service-details.html" class="stretched-link">
+                <h3>Global Connections</h3>
+            </a>
+            <p>Expand your network and gain access to skills and knowledge from diverse communities worldwide.</p>
+        </div>
+    </div><!-- End Service Item -->
+</div>            </div>
+
+        </section><!-- /Featured Services Section -->
+
+<!-- Features Section -->
+<section id="features" class="features section">
+
+    <!-- Section Title -->
+    <div class="container section-title" data-aos="fade-up">
+        <h2>Features</h2>
+        <p>Discover the unique features that make the Skill Swap Platform the ideal space for learning and sharing
+            skills.</p>
+    </div><!-- End Section Title -->
+
+    <div class="container">
+
+        <div class="row gy-4 align-items-center features-item">
+            <div class="col-md-5 d-flex align-items-center" data-aos="zoom-out" data-aos-delay="100">
+                <img src="https://miro.medium.com/v2/resize:fit:1045/1*TJo21kFWygMtGs04sJsIJQ.jpeg" class="img-fluid" alt="">
+            </div>
+            <div class="col-md-7" data-aos="fade-up" data-aos-delay="100">
+                <h3>Seamless Skill Exchange</h3>
+                <p class="fst-italic">
+                    Trade knowledge effortlessly with people around the world. Learn new skills while teaching what you
+                    know.
+                </p>
+                <ul>
+                    <li><i class="bi bi-check"></i> <span> Connect with like-minded learners and experts.</span></li>
+                    <li><i class="bi bi-check"></i> <span> Learn at your own pace with interactive sessions.</span></li>
+                    <li><i class="bi bi-check"></i> <span> A cost-free way to enhance your skills.</span></li>
+                </ul>
+            </div>
+        </div><!-- Features Item -->
+
+        <div class="row gy-4 align-items-center features-item">
+            <div class="col-md-5 order-1 order-md-2 d-flex align-items-center" data-aos="zoom-out" data-aos-delay="200">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQRrBeevuRO3U67_suzJP9PaMIpmJq3Z-I7jQ&s" class="img-fluid" alt="">
+            </div>
+            <div class="col-md-7 order-2 order-md-1" data-aos="fade-up" data-aos-delay="200">
+                <h3>Community-Driven Learning</h3>
+                <p class="fst-italic">
+                    Join a supportive community that values knowledge-sharing and collaboration.
+                </p>
+                <p>
+                    Engage with peers who share your interests and passions. Build meaningful connections while
+                    acquiring valuable skills.
+                </p>
+            </div>
+        </div><!-- Features Item -->
+
+        <div class="row gy-4 align-items-center features-item">
+            <div class="col-md-5 d-flex align-items-center" data-aos="zoom-out">
+                <img src="https://miro.com/blog/wp-content/uploads/2023/09/Interactive-Workshop-Activities-for-Virtual-Collaboration-Copy.png" class="img-fluid" alt="">
+            </div>
+            <div class="col-md-7" data-aos="fade-up">
+                <h3>Interactive Workshops & Sessions</h3>
+                <p>Participate in live sessions and hands-on workshops designed to facilitate effective learning.</p>
+                <ul>
+                    <li><i class="bi bi-check"></i> <span> Live and recorded sessions for flexibility.</span></li>
+                    <li><i class="bi bi-check"></i> <span> Practical exercises and real-world applications.</span></li>
+                    <li><i class="bi bi-check"></i> <span> Expert-led guidance with peer-to-peer support.</span></li>
+                </ul>
+            </div>
+        </div><!-- Features Item -->
+
+        <div class="row gy-4 align-items-center features-item">
+            <div class="col-md-5 order-1 order-md-2 d-flex align-items-center" data-aos="zoom-out">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQSHolqV9yjNxwwZVnvW_emNAVm8gCB-6kkGg&s" class="img-fluid" alt="">
+            </div>
+            <div class="col-md-7 order-2 order-md-1" data-aos="fade-up">
+                <h3>Global Networking & Opportunities</h3>
+                <p class="fst-italic">
+                    Expand your network beyond borders and gain access to new opportunities worldwide.
+                </p>
+                <p>
+                    Learn from individuals across different cultures and backgrounds, broadening both your knowledge and
+                    professional connections.
+                </p>
+            </div>
+        </div><!-- Features Item -->
+
+    </div>
+
+</section><!-- /Features Section -->
+
+    </main>
+
+{% endblock %}

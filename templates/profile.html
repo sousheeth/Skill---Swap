@@ -1,0 +1,104 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Profile{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <!-- Profile Card -->
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white text-center">
+                    <h3 class="mb-0 text-white">Profile</h3>
+                    <!-- Display error messages -->
+                    <div class="form-group">
+                        {% if messages %}
+                        <div class="messages">
+                            {% for message in messages %}
+                            <div class="alert {{ message.tags }}" id="message-alert"> {{ message }}</div>
+                            {% endfor %}
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <!-- Profile Info -->
+                <div class="card-body text-center">
+                    <!-- Profile Picture -->
+                    <img src="{{ profile.profile_picture.url }}" class="rounded-circle mb-3" alt="Profile Picture"
+                        width="150" height="150">
+                    <h4 class="text-primary">{{ user.username }}</h4>
+                    <p class="text-muted">{{ user.email }}</p>
+
+                    <!-- Bio -->
+                    <hr>
+                    <h5 class="text-primary">🖋️ Bio</h5>
+                    <p>{{ profile.bio|default:"No bio available" }}</p>
+
+                    <!-- Skills -->
+                    <h5 class="text-primary">🛠️ Skills</h5>
+                    <p>{{ profile.skills|default:"No skills added" }}</p>
+
+                    <!-- Interests -->
+                    <h5 class="text-primary">🎯 Interests</h5>
+                    <p>{{ profile.interests|default:"No interests added" }}</p>
+
+                    <!-- Edit and Home Buttons -->
+                    <div class="mt-3">
+                        <a href="{% url 'edit_profile' %}" class="btn btn-warning text-white">✏️ Edit Profile</a>
+                        <a href="{% url 'index' %}" class="btn btn-success text-white">🏠 Go to Home</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Reviews & Ratings -->
+            <div class="card shadow mt-4">
+                <div class="card-header bg-info text-white text-center">
+                    <h4 class="mb-0">🌟 Reviews & Ratings</h4>
+                </div>
+
+                <!-- Display Average Rating -->
+                <div class="card-body text-center">
+                    <h5 class="text-primary mb-3">⭐ Average Rating</h5>
+                    {% if average_rating %}
+                    <div class="mb-3">
+                        {% for star in "12345" %}
+                        {% if forloop.counter <= average_rating|floatformat:0 %} <i
+                            class="bi bi-star-fill text-warning"></i>
+                            {% else %}
+                            <i class="bi bi-star text-secondary"></i>
+                            {% endif %}
+                            {% endfor %}
+                    </div>
+                    <p class="text-muted">Average Rating: {{ average_rating|floatformat:1 }}/5</p>
+                    {% else %}
+                    <p class="text-muted">No ratings yet.</p>
+                    {% endif %}
+
+                    <!-- List of Reviews -->
+                    <h5 class="text-primary mt-4">💬 User Feedback</h5>
+                    <ul class="list-group">
+                        {% for review in reviews %}
+                        <li class="list-group-item">
+                            <strong>{{ review.reviewer.username }}</strong> rated:
+                            {% for i in "12345" %}
+                            {% if i|add:"0" <= review.rating %} <i class="bi bi-star-fill text-warning"></i>
+                                {% else %}
+                                <i class="bi bi-star text-secondary"></i>
+                                {% endif %}
+                                {% endfor %}
+                                <br>
+                                <p class="mt-2 text-muted">"{{ review.comment }}"</p>
+                                <small class="text-secondary">🕒 {{ review.created_at|date:"d M Y, H:i" }}</small>
+                        </li>
+                        {% empty %}
+                        <li class="list-group-item text-center text-muted">No reviews received yet.</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock %}
